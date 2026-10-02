@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { QdrantModule } from './qdrant/qdrant.module';
-import { HealthModule } from './health/health.module';
-import { DocumentModule } from './document/document.module';
-import { IngestionModule } from './ingestion/ingestion.module';
-import { QueryModule } from './query/query.module';
 import appConfig from './config/app.config';
+import { AppConfigModule } from './modules/config/app-config.module';
+import { TelegramModule } from './modules/telegram/telegram.module';
+import { IngestionModule } from './modules/ingestion/ingestion.module';
+import { VectorDbModule } from './modules/vector-db/vector-db.module';
+import { LlmModule } from './modules/llm/llm.module';
+import { RagModule } from './modules/rag/rag.module';
 
 @Module({
   imports: [
@@ -15,13 +14,12 @@ import appConfig from './config/app.config';
       isGlobal: true,
       load: [appConfig],
     }),
-    QdrantModule,
-    HealthModule,
-    DocumentModule,
+    AppConfigModule,
+    VectorDbModule,
+    LlmModule,
     IngestionModule,
-    QueryModule,
+    RagModule,
+    TelegramModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
